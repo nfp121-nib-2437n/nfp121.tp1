@@ -14,7 +14,8 @@ public class AuditeurCNAM {
     private String prenom;
     /** l'attribut matricule de chaque auditeur. */
     private String matricule;
-
+    private String accents[]={"è","é","á","à"};
+    private String accentsN[]={"e","a"};
     /**
      * "Création", le constructeur d'un auditeur avec son nom, son prénom et son
      * matricule.
@@ -31,6 +32,7 @@ public class AuditeurCNAM {
         this.prenom = prenom;
         this.matricule = matricule;
     }
+    
 
     /**
      * le login au Cnam : 6 premières lettres du nom suivies de la première
@@ -44,9 +46,22 @@ public class AuditeurCNAM {
      * @return le login du Cnam simplifié, sans les adaptations dues aux
      *         homonymes...
      */
-    public String login() {
-        return "";// à compléter
+   public String login() {
+        String login="";
+        int length=nom.length();
+        if(length>6) length=6;
+        login=nom.substring(0,length).toLowerCase();
+        for(int i=0;i<length;i++){
+            if(!Character.isDigit(nom.charAt(i)) && !Character.isLetter(nom.charAt(i)) || Character.isWhitespace(nom.charAt(i)) || nom.charAt(i)=='-')
+            login=login.substring(0,i)+"_"+login.substring(i+1);
+            
+        }
+        login=login.replaceAll("é","e");
+        login=login.replaceAll("è","e");
+        login+="_"+prenom.charAt(0);
+        return login;
     }
+
 
     /**
      * Lecture du nom de l'auditeur.
@@ -54,7 +69,7 @@ public class AuditeurCNAM {
      * @return son nom
      */
     public String nom() {
-        return null;// à compléter
+        return nom;// à compléter
     }
 
     /**
@@ -63,7 +78,7 @@ public class AuditeurCNAM {
      * @return son prénom
      */
     public String prenom() {
-        return null;// à compléter
+        return prenom;// à compléter
     }
 
     /**
@@ -72,7 +87,7 @@ public class AuditeurCNAM {
      * @return son matricule
      */
     public String matricule() {
-        return null;// à compléter
+        return matricule;// à compléter
     }
 
     /**
